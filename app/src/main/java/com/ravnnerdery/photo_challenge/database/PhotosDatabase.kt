@@ -1,10 +1,9 @@
-package com.ravnnerdery.recyclechallenge.database
+package com.ravnnerdery.photo_challenge.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ravnnerdery.photo_challenge.database.DatabaseDao
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 
 @Database(entities = [Photo::class], version = 1, exportSchema = false)
