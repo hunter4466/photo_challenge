@@ -15,13 +15,15 @@ class EnlargedPhotoFragment : Fragment() {
     }
 
     private lateinit var viewModel: EnlargedPhotoViewModel
+    private lateinit var binding: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(EnlargedPhotoViewModel::class.java)
-        return inflater.inflate(R.layout.enlarged_photo_fragment, container, false)
+        binding = inflater.inflate(R.layout.enlarged_photo_fragment, container, false)
+        return binding
     }
 
 }

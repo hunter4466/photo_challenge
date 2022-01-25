@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ravnnerdery.photo_challenge"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Photo_challenge">
+        android:theme="@style/Theme.Photo_challenge"
+        android:name=".application.PhotosApplication">
         <activity
             android:name=".MainActivity"
             android:exported="true">

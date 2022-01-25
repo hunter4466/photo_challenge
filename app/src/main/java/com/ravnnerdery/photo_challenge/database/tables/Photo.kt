@@ -13,5 +13,5 @@ class Photo(
     @ColumnInfo(name = "url")
     var url: String,
     @ColumnInfo(name = "thumbnailUrl")
-    var thumbUrl: String
+    var thumbnailUrl: String
 )
