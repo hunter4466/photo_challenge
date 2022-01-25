@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="post"
+            name="photo"
             type="com.ravnnerdery.photo_challenge.database.tables.Photo" />
 
         <variable
             name="clickListener"
-            type="com.ravnnerdery.photo_challenge.photoList.PhotosListener" />
+            type="com.ravnnerdery.photo_challenge.photoList.PhotoClickListener" />
     </data>
 
     <LinearLayout
@@ -21,7 +21,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/custom_border"
         android:backgroundTint="#FFFFFF"
-        android:onClick="@{() -> clickListener.onClick(post)}"
+        android:onClick="@{() -> clickListener.onClick(photo)}"
         android:orientation="vertical">
 
 
@@ -29,18 +29,18 @@
             android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/some_template_text_on_title"
+            android:text="some template text on title"
             android:textAlignment="center"
             android:textSize="20sp"
-            app:capitalizeTitle="@{post}" />
+            app:capitalizeTitle="@{photo}" />
 
         <TextView
             android:id="@+id/contentText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body_some_template_body"
-            app:capitalizeBody="@{post}" />
+            android:text="some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body some template body"
+            app:capitalizeBody="@{photo}" />
 
     </LinearLayout>
 </layout>
