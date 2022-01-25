@@ -20,10 +20,9 @@ private val retrofit = Retrofit.Builder()
 interface PostsApiService {
     @GET("photos")
     fun getPhotos(): Call<List<Photo>>
-
 }
 
-object PostsApi {
+object PhotosApi {
     val retrofitService: PostsApiService by lazy {
         retrofit.create(PostsApiService::class.java)
     }

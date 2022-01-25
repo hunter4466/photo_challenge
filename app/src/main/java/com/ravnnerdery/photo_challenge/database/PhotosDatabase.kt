@@ -7,20 +7,20 @@ import androidx.room.RoomDatabase
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 
 @Database(entities = [Photo::class], version = 1, exportSchema = false)
-abstract class PostsDatabase: RoomDatabase() {
+abstract class PhotosDatabase: RoomDatabase() {
     abstract val databaseDao: DatabaseDao
 
     companion object{
         @Volatile
-        private var INSTANCE: PostsDatabase? = null
+        private var INSTANCE: PhotosDatabase? = null
 
-        fun getInstance(context: Context) : PostsDatabase {
+        fun getInstance(context: Context) : PhotosDatabase {
             synchronized(this){
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        PostsDatabase::class.java,
+                        PhotosDatabase::class.java,
                         "Photos_database"
                     )
                         .fallbackToDestructiveMigration()
