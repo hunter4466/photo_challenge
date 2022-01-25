@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/rio_c/Repos/ravn/photo_challenge/app/src/main/res/drawable/custom_border.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/rio_c/Repos/ravn/photo_challenge/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rio_c/Repos/ravn/photo_challenge/app/src/main/res/layout/enlarged_photo_fragment.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rio_c/Repos/ravn/photo_challenge/app/src/main/res/layout/photo_list_fragment.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/rio_c/Repos/ravn/photo_challenge/app/src/main/res/layout/photo_view.xml" value="0.16614583333333333" />
       </map>
     </option>
   </component>

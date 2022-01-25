@@ -13,7 +13,7 @@ interface DatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPhoto(photo: Photo)
 
-    @Query("SELECT * from photo_table")
+    @Query("SELECT * from photo_table LIMIT 100")
     fun getPhotos(): LiveData<List<Photo>>
 
     @Query("SELECT url from photo_table WHERE id = :key")
