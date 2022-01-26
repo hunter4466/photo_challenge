@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="photo"
+            type="com.ravnnerdery.photo_challenge.database.tables.Photo" />
+
+        <variable
+            name="clickListener"
+            type="com.ravnnerdery.photo_challenge.photoList.PhotoClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_border"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="@{() -> clickListener.onClick(photo)}">
+
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="285dp"
+            android:layout_height="82dp"
+            android:text="some template text on title"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:capitalizeText="@{photo}" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="82dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </LinearLayout>
+</layout>
