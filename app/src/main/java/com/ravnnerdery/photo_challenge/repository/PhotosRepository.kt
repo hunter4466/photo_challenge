@@ -21,7 +21,6 @@ import retrofit2.Response
 
 interface PhotosRepository {
     fun allPhotosFromDatabase(): LiveData<List<Photo>>
-    fun bigPhotoFromDatabase(id: Long): String
 }
 class PhotosRepositoryImpl(application: Application) : PhotosRepository {
     private var viewModelJob = Job()
@@ -32,8 +31,6 @@ class PhotosRepositoryImpl(application: Application) : PhotosRepository {
     private val databaseInstance = PhotosDatabase.getInstance(application).databaseDao
 
     override fun allPhotosFromDatabase(): LiveData<List<Photo>> = databaseInstance.getPhotos()
-
-    override fun bigPhotoFromDatabase(id: Long): String = databaseInstance.getSinglePhoto(id)
 
     private fun loadFromApiAndSetIntoDatabase() {
         PhotosApi.retrofitService.getPhotos().enqueue(object : Callback<List<Photo>> {

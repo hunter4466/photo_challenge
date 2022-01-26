@@ -16,6 +16,4 @@ interface DatabaseDao {
     @Query("SELECT * from photo_table LIMIT 100")
     fun getPhotos(): LiveData<List<Photo>>
 
-    @Query("SELECT url from photo_table WHERE id = :key")
-    fun getSinglePhoto(key: Long): String
 }

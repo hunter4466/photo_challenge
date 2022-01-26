@@ -16,8 +16,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhotoListFragment : Fragment() {
 
-    private lateinit var binding: View
     private val photoListViewModel: PhotoListViewModel by viewModel()
+    private lateinit var binding: View
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PhotosAdapter
 
