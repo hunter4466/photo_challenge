@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.PhotoViewStraightBinding
-
+import com.squareup.picasso.Picasso
 
 class PhotosAdapter(private val clickListener: PhotoClickListener): ListAdapter<Photo, PhotosAdapter.ViewHolder>(PostListDiffCallBack()) {
 
@@ -22,7 +22,9 @@ class PhotosAdapter(private val clickListener: PhotoClickListener): ListAdapter<
 
     class ViewHolder private constructor (private val binding: PhotoViewStraightBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Photo, clickListener: PhotoClickListener){
+            binding
             binding.photo = item
+            Picasso.get().load(item.thumbnailUrl).into(binding.thumbNailfromList)
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }

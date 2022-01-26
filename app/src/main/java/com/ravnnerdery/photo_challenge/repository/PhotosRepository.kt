@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.ravnnerdery.photo_challenge.database.PhotosDatabase
 import com.ravnnerdery.photo_challenge.database.tables.Photo
+import com.ravnnerdery.photo_challenge.enlargedPhoto.EnlargedPhotoViewModel
 import com.ravnnerdery.photo_challenge.network.PhotosApi
 import com.ravnnerdery.photo_challenge.photoList.PhotoListViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -58,4 +59,5 @@ class PhotosRepositoryImpl(application: Application) : PhotosRepository {
 val appModule = module {
     single<PhotosRepository> { PhotosRepositoryImpl(androidApplication()) }
     viewModel{ PhotoListViewModel(get()) }
+    viewModel{ EnlargedPhotoViewModel(get()) }
 }

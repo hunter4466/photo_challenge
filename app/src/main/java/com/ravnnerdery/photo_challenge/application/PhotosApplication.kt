@@ -15,6 +15,5 @@ class PhotosApplication : Application() {
             androidContext(this@PhotosApplication)
             modules(appModule)
         }
-        println("<<<<<<<<<<<< KOIN IS CORRECTLY STARTED >>>>>>>>>>>>")
     }
 }

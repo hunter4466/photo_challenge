@@ -7,9 +7,11 @@
             name="photoListViewModel"
             type="com.ravnnerdery.photo_challenge.photoList.PhotoListViewModel" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#0D000000"
         android:orientation="vertical"
         tools:context=".photoList.PhotoListFragment">
 

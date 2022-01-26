@@ -11,33 +11,34 @@
         <variable
             name="clickListener"
             type="com.ravnnerdery.photo_challenge.photoList.PhotoClickListener" />
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_border"
-        android:backgroundTint="#FFFFFF"
         android:onClick="@{() -> clickListener.onClick(photo)}">
-
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="285dp"
             android:layout_height="82dp"
-            android:text="some template text on title"
+            android:text="@string/some_template_text_on_title"
             android:textAlignment="center"
             android:textSize="20sp"
             app:capitalizeText="@{photo}" />
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="82dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:id="@+id/thumbNailfromList"
+            android:layout_width="0dp"
+            android:layout_height="81dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/thumbnail_image" />
 
     </LinearLayout>
 </layout>
