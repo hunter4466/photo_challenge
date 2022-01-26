@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ravnnerdery.photo_challenge.database.tables.Photo
-import com.ravnnerdery.photo_challenge.databinding.PhotoViewBinding
+import com.ravnnerdery.photo_challenge.databinding.PhotoViewStraightBinding
 
 
 class PhotosAdapter(private val clickListener: PhotoClickListener): ListAdapter<Photo, PhotosAdapter.ViewHolder>(PostListDiffCallBack()) {
@@ -20,8 +20,7 @@ class PhotosAdapter(private val clickListener: PhotoClickListener): ListAdapter<
         holder.bind(item, clickListener)
     }
 
-    class ViewHolder private constructor (private val binding: PhotoViewBinding): RecyclerView.ViewHolder(binding.root){
-
+    class ViewHolder private constructor (private val binding: PhotoViewStraightBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Photo, clickListener: PhotoClickListener){
             binding.photo = item
             binding.clickListener = clickListener
@@ -30,12 +29,10 @@ class PhotosAdapter(private val clickListener: PhotoClickListener): ListAdapter<
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = PhotoViewBinding.inflate(layoutInflater, parent, false)
-                return ViewHolder(binding)
+                return ViewHolder(PhotoViewStraightBinding.inflate(layoutInflater, parent, false))
             }
         }
     }
-
 }
 
 class PostListDiffCallBack : DiffUtil.ItemCallback<Photo>(){

@@ -13,11 +13,6 @@
         android:orientation="vertical"
         tools:context=".photoList.PhotoListFragment">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:text="Hello List" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/photoListRecyclerView"
             android:layout_width="match_parent"
