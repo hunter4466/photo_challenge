@@ -15,12 +15,11 @@ class PhotosAdapter(private val clickListener: PhotoClickListener) :
     ListAdapter<Photo, PhotosAdapter.ViewHolder>(PostListDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (viewType == 1){
+        return if (viewType == 1) {
             SubViewHolderStraight.from(parent)
         } else {
             SubViewHolderReverse.from(parent)
         }
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -29,7 +28,7 @@ class PhotosAdapter(private val clickListener: PhotoClickListener) :
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        return if(item.id.toInt() % 2 == 0){
+        return if (item.id.toInt() % 2 == 0) {
             1
         } else {
             0
@@ -38,17 +37,19 @@ class PhotosAdapter(private val clickListener: PhotoClickListener) :
 
     abstract class ViewHolder(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
-         abstract fun bind(item: Photo, clickListener: PhotoClickListener)
+        abstract fun bind(item: Photo, clickListener: PhotoClickListener)
     }
+
     class SubViewHolderStraight private constructor(binding: PhotoViewStraightBinding) :
-            ViewHolder(binding){
-                override fun bind(item: Photo, clickListener: PhotoClickListener){
-                    val binding = binding as PhotoViewStraightBinding
-                    binding.photo = item
-                    Picasso.get().load(item.thumbnailUrl).into(binding.thumbNailfromList)
-                    binding.clickListener = clickListener
-                    binding.executePendingBindings()
-                }
+        ViewHolder(binding) {
+        override fun bind(item: Photo, clickListener: PhotoClickListener) {
+            val binding = binding as PhotoViewStraightBinding
+            binding.photo = item
+            Picasso.get().load(item.thumbnailUrl).into(binding.thumbNailfromList)
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
+        }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -56,16 +57,18 @@ class PhotosAdapter(private val clickListener: PhotoClickListener) :
                 return SubViewHolderStraight(binding)
             }
         }
-            }
+    }
+
     class SubViewHolderReverse private constructor(binding: PhotoViewReverseBinding) :
-        ViewHolder(binding){
-        override fun bind(item: Photo, clickListener: PhotoClickListener){
+        ViewHolder(binding) {
+        override fun bind(item: Photo, clickListener: PhotoClickListener) {
             val binding = binding as PhotoViewReverseBinding
             binding.photo = item
             Picasso.get().load(item.thumbnailUrl).into(binding.thumbNailfromList)
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

@@ -9,7 +9,8 @@ import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.EnlargedPhotoBinding
 import com.squareup.picasso.Picasso
 
-class EnlargedPhotoAdapter : ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>(EnlargedPhotoDiffCallBack()) {
+class EnlargedPhotoAdapter :
+    ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>(EnlargedPhotoDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -20,11 +21,13 @@ class EnlargedPhotoAdapter : ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>
         holder.bind(item)
     }
 
-    class ViewHolder private constructor (private val binding: EnlargedPhotoBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Photo){
+    class ViewHolder private constructor(private val binding: EnlargedPhotoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Photo) {
             Picasso.get().load(item.url).into(binding.enlargedPhotoView)
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -35,7 +38,7 @@ class EnlargedPhotoAdapter : ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>
 
 }
 
-class EnlargedPhotoDiffCallBack : DiffUtil.ItemCallback<Photo>(){
+class EnlargedPhotoDiffCallBack : DiffUtil.ItemCallback<Photo>() {
     override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
         return oldItem.id == newItem.id
     }
