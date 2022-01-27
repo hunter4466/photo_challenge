@@ -42,4 +42,5 @@ class PhotoListFragment : Fragment() {
 
         return binding
     }
+
 }
