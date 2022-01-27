@@ -12,13 +12,19 @@
         android:layout_height="match_parent"
         tools:context=".enlargedPhoto.EnlargedPhotoFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/enlargedPhotoRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/enlargedPhotoPullToRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#000000"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/enlargedPhotoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#000000"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </FrameLayout>
 </layout>

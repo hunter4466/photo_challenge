@@ -26,7 +26,7 @@ class PhotoListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = inflater.inflate(R.layout.photo_list_fragment, container, false)
-        adapter = PhotosAdapter(PhotoClickListener { id -> photoListViewModel.onPhotoClicked(id) })
+        adapter = PhotosAdapter( this.context ,PhotoClickListener { id -> photoListViewModel.onPhotoClicked(id) })
         recyclerView = binding.photoListRecyclerView
         recyclerView.adapter = adapter
 

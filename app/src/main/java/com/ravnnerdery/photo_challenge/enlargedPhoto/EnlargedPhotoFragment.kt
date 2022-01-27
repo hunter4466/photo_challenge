@@ -29,7 +29,7 @@ class EnlargedPhotoFragment : Fragment() {
         val args = EnlargedPhotoFragmentArgs.fromBundle(requireArguments())
         binding = inflater.inflate(R.layout.enlarged_photo_fragment, container, false)
         recyclerView = binding.enlargedPhotoRecyclerView
-        adapter = EnlargedPhotoAdapter()
+        adapter = EnlargedPhotoAdapter(this.context)
         recyclerView.adapter = adapter
         snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)

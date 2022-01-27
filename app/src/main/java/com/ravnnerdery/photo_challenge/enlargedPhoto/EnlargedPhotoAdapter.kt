@@ -1,15 +1,16 @@
 package com.ravnnerdery.photo_challenge.enlargedPhoto
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.EnlargedPhotoBinding
-import com.squareup.picasso.Picasso
 
-class EnlargedPhotoAdapter :
+class EnlargedPhotoAdapter(val context: Context?) :
     ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>(EnlargedPhotoDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,14 +19,16 @@ class EnlargedPhotoAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        if (context != null) {
+            holder.bind(context, item)
+        }
     }
 
     class ViewHolder private constructor(private val binding: EnlargedPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Photo) {
-            Picasso.get().load(item.url).into(binding.enlargedPhotoView)
+        fun bind(context: Context, item: Photo) {
             binding.executePendingBindings()
+            Glide.with(context).load(item.thumbnailUrl).into(binding.enlargedPhotoView)
         }
 
         companion object {
