@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/photoListFragment">
+
+    <fragment
+        android:id="@+id/photoListFragment"
+        android:name="com.ravnnerdery.photo_challenge.photoList.PhotoListFragment"
+        android:label="photo_list_fragment"
+        tools:layout="@layout/photo_list_fragment" >
+        <action
+            android:id="@+id/action_photoListFragment_to_enlargedPhotoFragment"
+            app:destination="@id/enlargedPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enlargedPhotoFragment"
+        android:name="com.ravnnerdery.photo_challenge.enlargedPhoto.EnlargedPhotoFragment"
+        android:label="enlarged_photo_fragment"
+        tools:layout="@layout/enlarged_photo_fragment" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
+</navigation>
