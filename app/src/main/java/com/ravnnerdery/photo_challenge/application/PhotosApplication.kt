@@ -1,7 +1,7 @@
 package com.ravnnerdery.photo_challenge.application
 
 import android.app.Application
-import com.ravnnerdery.photo_challenge.appModule
+import com.ravnnerdery.photo_challenge.repository.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

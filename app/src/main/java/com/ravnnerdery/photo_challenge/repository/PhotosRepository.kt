@@ -1,8 +1,7 @@
-package com.ravnnerdery.photo_challenge
+package com.ravnnerdery.photo_challenge.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.ravnnerdery.photo_challenge.database.PhotosDatabase
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.enlargedPhoto.EnlargedPhotoViewModel
@@ -21,6 +20,7 @@ import retrofit2.Response
 
 interface PhotosRepository {
     fun allPhotosFromDatabase(): LiveData<List<Photo>>
+    fun loadFromApiAndSetIntoDatabase()
 }
 class PhotosRepositoryImpl(application: Application) : PhotosRepository {
     private var viewModelJob = Job()
@@ -32,7 +32,7 @@ class PhotosRepositoryImpl(application: Application) : PhotosRepository {
 
     override fun allPhotosFromDatabase(): LiveData<List<Photo>> = databaseInstance.getPhotos()
 
-    private fun loadFromApiAndSetIntoDatabase() {
+    override fun loadFromApiAndSetIntoDatabase() {
         PhotosApi.retrofitService.getPhotos().enqueue(object : Callback<List<Photo>> {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
                 response.body()?.forEach { elm ->

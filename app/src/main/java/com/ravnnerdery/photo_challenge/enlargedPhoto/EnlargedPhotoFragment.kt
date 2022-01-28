@@ -1,10 +1,13 @@
 package com.ravnnerdery.photo_challenge.enlargedPhoto
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.AbsListView
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -25,25 +28,33 @@ class EnlargedPhotoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val args = EnlargedPhotoFragmentArgs.fromBundle(requireArguments())
         binding = inflater.inflate(R.layout.enlarged_photo_fragment, container, false)
         recyclerView = binding.enlargedPhotoRecyclerView
-        adapter = EnlargedPhotoAdapter(this.context)
+        adapter = EnlargedPhotoAdapter()
         recyclerView.adapter = adapter
         snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
-
         enlargedPhotoViewModel.allPhotos().observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            recyclerView.scrollToPosition(args.id.toInt() - 1 )
+            if(enlargedPhotoViewModel.currentPosition == 0){
+                val argPosition = args.id.toInt() -1
+                recyclerView.scrollToPosition(argPosition)
+                enlargedPhotoViewModel.currentPosition = argPosition
+            } else {
+                enlargedPhotoViewModel.currentPosition?.let { it -> recyclerView.scrollToPosition(it) }
+            }
         })
-
         return binding
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroy() {
+        val layoutManager = recyclerView.layoutManager
+        val snapView: View? = snapHelper.findSnapView(layoutManager)
+        val snapPosition = snapView?.let { layoutManager?.getPosition(it) }
+        enlargedPhotoViewModel.currentPosition = snapPosition
+        super.onDestroy()
     }
 
 }

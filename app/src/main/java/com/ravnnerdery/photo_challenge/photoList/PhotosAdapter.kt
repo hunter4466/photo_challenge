@@ -1,23 +1,22 @@
 package com.ravnnerdery.photo_challenge.photoList
 
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
-import androidx.core.content.MimeTypeFilter
+import android.webkit.WebSettings
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ravnnerdery.photo_challenge.R
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.PhotoViewReverseBinding
 import com.ravnnerdery.photo_challenge.databinding.PhotoViewStraightBinding
 
-class PhotosAdapter(val context: Context?, private val clickListener: PhotoClickListener) :
+class PhotosAdapter(private val clickListener: PhotoClickListener) :
     ListAdapter<Photo, PhotosAdapter.ViewHolder>(PostListDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,9 +28,7 @@ class PhotosAdapter(val context: Context?, private val clickListener: PhotoClick
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (context != null) {
-            holder.bind(context, getItem(position), clickListener)
-        }
+        holder.bind(getItem(position), clickListener)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -45,25 +42,28 @@ class PhotosAdapter(val context: Context?, private val clickListener: PhotoClick
 
     abstract class ViewHolder(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        abstract fun bind(context: Context, item: Photo, clickListener: PhotoClickListener)
+        abstract fun bind(item: Photo, clickListener: PhotoClickListener)
     }
 
     class SubViewHolderStraight private constructor(binding: PhotoViewStraightBinding) :
         ViewHolder(binding) {
-        override fun bind(context: Context, item: Photo, clickListener: PhotoClickListener) {
+        override fun bind(item: Photo, clickListener: PhotoClickListener) {
             val binding = binding as PhotoViewStraightBinding
             binding.photo = item
             binding.clickListener = clickListener
-            val cR = context.contentResolver
-            val mime = MimeTypeMap.getSingleton()
-            val uri = Uri.parse(item.thumbnailUrl)
-            val type = mime.getExtensionFromMimeType(cR.getType(uri))
-            println(type)
+            val uri = GlideUrl(
+                item.thumbnailUrl, LazyHeaders.Builder()
+                    .addHeader(
+                        "User-Agent",
+                        WebSettings.getDefaultUserAgent(binding.thumbNailfromList.context)
+                    )
+                    .build()
+            )
             Glide
-                .with(context)
+                .with(binding.thumbNailfromList.context)
                 .load(uri)
-                .placeholder(R.drawable.ic_launcher_background)
-                .transition(DrawableTransitionOptions.withCrossFade(250))
+                .placeholder(R.drawable.background_img)
+                .transition(DrawableTransitionOptions.withCrossFade(150))
                 .into(binding.thumbNailfromList)
 
             binding.executePendingBindings()
@@ -80,16 +80,23 @@ class PhotosAdapter(val context: Context?, private val clickListener: PhotoClick
 
     class SubViewHolderReverse private constructor(binding: PhotoViewReverseBinding) :
         ViewHolder(binding) {
-        override fun bind(context: Context, item: Photo, clickListener: PhotoClickListener) {
+        override fun bind(item: Photo, clickListener: PhotoClickListener) {
             val binding = binding as PhotoViewReverseBinding
             binding.photo = item
             binding.clickListener = clickListener
-            val uri = Uri.parse(item.thumbnailUrl + ".png")
+            val uri = GlideUrl(
+                item.thumbnailUrl, LazyHeaders.Builder()
+                    .addHeader(
+                        "User-Agent",
+                        WebSettings.getDefaultUserAgent(binding.thumbNailfromList.context)
+                    )
+                    .build()
+            )
             Glide
-                .with(context)
+                .with(binding.thumbNailfromList.context)
                 .load(uri)
-                .placeholder(R.drawable.ic_launcher_background)
-                .transition(DrawableTransitionOptions.withCrossFade(250))
+                .placeholder(R.drawable.background_img)
+                .transition(DrawableTransitionOptions.withCrossFade(150))
                 .into(binding.thumbNailfromList)
 
             binding.executePendingBindings()

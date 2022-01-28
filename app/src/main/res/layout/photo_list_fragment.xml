@@ -15,12 +15,19 @@
         android:orientation="vertical"
         tools:context=".photoList.PhotoListFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/photoListRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/photoListSwypeContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#000000"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photoListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#000000"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 </layout>

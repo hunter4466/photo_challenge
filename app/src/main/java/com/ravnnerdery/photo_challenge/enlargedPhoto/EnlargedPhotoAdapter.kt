@@ -1,16 +1,20 @@
 package com.ravnnerdery.photo_challenge.enlargedPhoto
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.ravnnerdery.photo_challenge.R
 import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.EnlargedPhotoBinding
 
-class EnlargedPhotoAdapter(val context: Context?) :
+class EnlargedPhotoAdapter :
     ListAdapter<Photo, EnlargedPhotoAdapter.ViewHolder>(EnlargedPhotoDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,16 +23,26 @@ class EnlargedPhotoAdapter(val context: Context?) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        if (context != null) {
-            holder.bind(context, item)
-        }
+            holder.bind(item)
     }
 
     class ViewHolder private constructor(private val binding: EnlargedPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(context: Context, item: Photo) {
+        fun bind( item: Photo) {
             binding.executePendingBindings()
-            Glide.with(context).load(item.thumbnailUrl).into(binding.enlargedPhotoView)
+            val uri = GlideUrl(
+                item.thumbnailUrl, LazyHeaders.Builder()
+                    .addHeader(
+                        "User-Agent",
+                        WebSettings.getDefaultUserAgent(binding.enlargedPhotoView.context)
+                    )
+                    .build()
+            )
+            Glide.with(binding.enlargedPhotoView.context)
+                .load(uri)
+                .placeholder(R.drawable.background_img)
+                .transition(DrawableTransitionOptions.withCrossFade(150))
+                .into(binding.enlargedPhotoView)
         }
 
         companion object {
@@ -38,7 +52,6 @@ class EnlargedPhotoAdapter(val context: Context?) :
             }
         }
     }
-
 }
 
 class EnlargedPhotoDiffCallBack : DiffUtil.ItemCallback<Photo>() {
