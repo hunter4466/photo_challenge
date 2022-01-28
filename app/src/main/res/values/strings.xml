@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">photo_challenge</string>
+    <string name="some_template_text_on_title">some template text on title</string>
+    <string name="thumbnail_image">thumbnail image</string>
+</resources>
