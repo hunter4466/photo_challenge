@@ -15,13 +15,14 @@ import com.ravnnerdery.photo_challenge.R
 import kotlinx.android.synthetic.main.enlarged_photo_fragment.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.recyclerview.widget.SnapHelper
+import com.ravnnerdery.photo_challenge.databinding.EnlargedPhotoFragmentBinding
+import com.ravnnerdery.photo_challenge.databinding.PhotoListFragmentBinding
 import kotlin.properties.Delegates
 
 class EnlargedPhotoFragment : Fragment() {
 
     private val enlargedPhotoViewModel: EnlargedPhotoViewModel by viewModel()
-    private lateinit var binding: View
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: EnlargedPhotoFragmentBinding
     private lateinit var adapter: EnlargedPhotoAdapter
     private lateinit var snapHelper: SnapHelper
 
@@ -29,31 +30,40 @@ class EnlargedPhotoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = EnlargedPhotoFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val args = EnlargedPhotoFragmentArgs.fromBundle(requireArguments())
-        binding = inflater.inflate(R.layout.enlarged_photo_fragment, container, false)
-        recyclerView = binding.enlargedPhotoRecyclerView
-        adapter = EnlargedPhotoAdapter()
-        recyclerView.adapter = adapter
-        snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
+        binding.let{
+            adapter = EnlargedPhotoAdapter()
+            it.enlargedPhotoRecyclerView.adapter = adapter
+            snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(it.enlargedPhotoRecyclerView)
+        }
+
         enlargedPhotoViewModel.allPhotos().observe(viewLifecycleOwner, {
             adapter.submitList(it)
             if(enlargedPhotoViewModel.currentPosition == 0){
                 val argPosition = args.id.toInt() -1
-                recyclerView.scrollToPosition(argPosition)
+                binding.enlargedPhotoRecyclerView.scrollToPosition(argPosition)
                 enlargedPhotoViewModel.currentPosition = argPosition
             } else {
-                enlargedPhotoViewModel.currentPosition?.let { it -> recyclerView.scrollToPosition(it) }
+                enlargedPhotoViewModel.currentPosition?.let { it -> binding.enlargedPhotoRecyclerView.scrollToPosition(it) }
             }
         })
-        return binding
+
     }
 
     override fun onDestroy() {
-        val layoutManager = recyclerView.layoutManager
-        val snapView: View? = snapHelper.findSnapView(layoutManager)
-        val snapPosition = snapView?.let { layoutManager?.getPosition(it) }
-        enlargedPhotoViewModel.currentPosition = snapPosition
+        binding.enlargedPhotoRecyclerView.layoutManager?.let { it ->
+            val snapView: View? = snapHelper.findSnapView(it)
+            val snapPosition = snapView?.let { position -> it.getPosition(position) }
+            enlargedPhotoViewModel.currentPosition = snapPosition
+        }
+
         super.onDestroy()
     }
 

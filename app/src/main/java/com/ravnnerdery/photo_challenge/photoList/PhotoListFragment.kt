@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SnapHelper
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ravnnerdery.photo_challenge.R
 import com.ravnnerdery.photo_challenge.database.tables.Photo
+import com.ravnnerdery.photo_challenge.databinding.PhotoListFragmentBinding
 import com.ravnnerdery.photo_challenge.enlargedPhoto.EnlargedPhotoViewModel
 import kotlinx.android.synthetic.main.photo_list_fragment.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,51 +22,50 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PhotoListFragment : Fragment() {
 
     private val photoListViewModel: PhotoListViewModel by viewModel()
-    private lateinit var binding: View
-    private lateinit var recyclerView: RecyclerView
+    private var binding: PhotoListFragmentBinding? = null
     private lateinit var adapter: PhotosAdapter
     private lateinit var snapHelper: SnapHelper
-    private lateinit var swipeContainer: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = inflater.inflate(R.layout.photo_list_fragment, container, false)
-        adapter = PhotosAdapter( PhotoClickListener { id -> photoListViewModel.onPhotoClicked(id) })
-        recyclerView = binding.photoListRecyclerView
-        recyclerView.adapter = adapter
-        snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
-        swipeContainer = binding.photoListSwypeContainer
+        binding = PhotoListFragmentBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.let {
+            adapter = PhotosAdapter( PhotoClickListener { id -> photoListViewModel.onPhotoClicked(id) })
+            it.photoListRecyclerView.adapter = adapter
+            snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(it.photoListRecyclerView)
+            it.photoListSwypeContainer.setOnRefreshListener {
+                photoListViewModel.startRefreshingData()
+            }
+        }
 
         photoListViewModel.allPhotos().observe(viewLifecycleOwner, {
             adapter.submitList(it)
             if(photoListViewModel.currentPosition != 0){
-                photoListViewModel.currentPosition?.let { it1 -> recyclerView.scrollToPosition(it1) }
+                photoListViewModel.currentPosition?.let { it1 -> binding?.photoListRecyclerView?.scrollToPosition(it1) }
             }
+            binding?.photoListSwypeContainer?.isRefreshing = false
         })
 
         photoListViewModel.navigateToSnapshot.observe(this, { photo ->
-        photo?.let{
-            this.findNavController().navigate(PhotoListFragmentDirections.actionPhotoListFragmentToEnlargedPhotoFragment(photo))
-                    photoListViewModel.onSnapshotNavigated()
-        }})
-
-        swipeContainer.setOnRefreshListener {
-            photoListViewModel.startRefreshingData()
-            photoListViewModel.allPhotos().observe(viewLifecycleOwner, {
-                swipeContainer.isRefreshing = false
-            })
-        }
-
-        return binding
+            photo?.let{
+                this.findNavController().navigate(PhotoListFragmentDirections.actionPhotoListFragmentToEnlargedPhotoFragment(photo))
+                photoListViewModel.onSnapshotNavigated()
+            }})
     }
     override fun onDestroy() {
-        val layoutManager = recyclerView.layoutManager
-        val snapView: View? = snapHelper.findSnapView(layoutManager)
-        val snapPosition = snapView?.let { layoutManager?.getPosition(it) }
-        photoListViewModel.currentPosition = snapPosition
+        binding?.photoListRecyclerView?.layoutManager?.let {
+            val snapView: View? = snapHelper.findSnapView(it)
+            val snapPosition = snapView?.let { position -> it.getPosition(position) }
+            photoListViewModel.currentPosition = snapPosition
+        }
         super.onDestroy()
     }
 
