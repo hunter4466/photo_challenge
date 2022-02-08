@@ -1,23 +1,14 @@
 package com.ravnnerdery.photo_challenge.enlargedPhoto
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.widget.AbsListView
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.ravnnerdery.photo_challenge.R
-import kotlinx.android.synthetic.main.enlarged_photo_fragment.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.recyclerview.widget.SnapHelper
 import com.ravnnerdery.photo_challenge.databinding.EnlargedPhotoFragmentBinding
-import com.ravnnerdery.photo_challenge.databinding.PhotoListFragmentBinding
-import kotlin.properties.Delegates
 
 class EnlargedPhotoFragment : Fragment() {
 

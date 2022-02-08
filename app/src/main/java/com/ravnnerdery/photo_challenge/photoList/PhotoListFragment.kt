@@ -5,18 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentContainer
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.ravnnerdery.photo_challenge.R
-import com.ravnnerdery.photo_challenge.database.tables.Photo
 import com.ravnnerdery.photo_challenge.databinding.PhotoListFragmentBinding
-import com.ravnnerdery.photo_challenge.enlargedPhoto.EnlargedPhotoViewModel
-import kotlinx.android.synthetic.main.photo_list_fragment.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhotoListFragment : Fragment() {
