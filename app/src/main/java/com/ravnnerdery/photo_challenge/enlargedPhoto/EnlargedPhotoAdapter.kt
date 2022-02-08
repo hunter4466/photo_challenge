@@ -31,7 +31,7 @@ class EnlargedPhotoAdapter :
         fun bind( item: Photo) {
             binding.executePendingBindings()
             val uri = GlideUrl(
-                item.thumbnailUrl, LazyHeaders.Builder()
+                item.url, LazyHeaders.Builder()
                     .addHeader(
                         "User-Agent",
                         WebSettings.getDefaultUserAgent(binding.enlargedPhotoView.context)
